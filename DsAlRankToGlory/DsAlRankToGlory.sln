@@ -5,6 +5,8 @@ VisualStudioVersion = 17.13.35617.110 d17.13
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DsAlRankToGlory", "DsAlRankToGlory\DsAlRankToGlory.csproj", "{D9393995-332B-4398-8294-22E0C8C2622D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DsAlRankToGlory.Tests", "DsAlRankToGlory.Tests\DsAlRankToGlory.Tests.csproj", "{873AB9E8-A4BE-4166-A81D-2BAA79D1E376}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{D9393995-332B-4398-8294-22E0C8C2622D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D9393995-332B-4398-8294-22E0C8C2622D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D9393995-332B-4398-8294-22E0C8C2622D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{873AB9E8-A4BE-4166-A81D-2BAA79D1E376}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{873AB9E8-A4BE-4166-A81D-2BAA79D1E376}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{873AB9E8-A4BE-4166-A81D-2BAA79D1E376}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{873AB9E8-A4BE-4166-A81D-2BAA79D1E376}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
