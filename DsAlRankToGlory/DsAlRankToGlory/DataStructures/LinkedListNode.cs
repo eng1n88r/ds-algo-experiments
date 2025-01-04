@@ -4,7 +4,7 @@ public class LinkedListNode
 {
     public int Data { get; set; }
 
-    public LinkedListNode NextNode { get; set; }
+    public LinkedListNode? NextNode { get; set; }
 
     public LinkedListNode()
     {
@@ -29,7 +29,7 @@ public class LinkedListNode
         current.NextNode = end;
     }
 
-    public LinkedListNode FindNode(int data)
+    public LinkedListNode? FindNode(int data)
     {
         LinkedListNode result = this;
 

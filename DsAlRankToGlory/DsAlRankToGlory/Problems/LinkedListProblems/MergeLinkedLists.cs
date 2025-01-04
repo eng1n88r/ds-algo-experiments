@@ -4,33 +4,26 @@ namespace DsAlRankToGlory.Problems.LinkedListProblems;
 
 public class MergeLinkedLists
 {
-    public LinkedListNode MergeNLists(List<LinkedListNode> collection)
+    public LinkedListNode? MergeNLists(List<LinkedListNode> collection)
     {
-        LinkedListNode result = null;
+        LinkedListNode? result = null;
 
-        for (int i = 0; i < collection.Count; i++)
+        foreach (var item in collection)
         {
-            result = MergeIteratively(collection[i], result);
+            result = MergeIteratively(item, result);
         }
 
         return result;
     }
 
-    private LinkedListNode MergeIteratively (LinkedListNode one, LinkedListNode two)
+    private LinkedListNode? MergeIteratively(LinkedListNode? one, LinkedListNode? two)
     {
-        if(one == null)
-        {
-            return two;
-        }
-
-        if (two == null)
-        {
-            return one;
-        }
-
+        if (one == null) return two;
+        if (two == null) return one;
+        
         LinkedListNode head;
 
-        if(one.Data < two.Data)
+        if (one.Data < two.Data)
         {
             head = one;
         }
@@ -43,47 +36,33 @@ public class MergeLinkedLists
 
         while (one.NextNode != null)
         {
-            if(one.NextNode.Data > two.Data)
+            if (one.NextNode.Data > two.Data)
             {
-                LinkedListNode tmp = one.NextNode;
-                one.NextNode = two;
-                two = tmp;
+                (one.NextNode, two) = (two, one.NextNode);
             }
 
             one = one.NextNode;
         }
 
-        if (one.NextNode == null)
-        {
-            one.NextNode = two;
-        }
+        one.NextNode ??= two;
 
         return head;
     }
 
-    private LinkedListNode MergeRecursion(LinkedListNode one, LinkedListNode two)
+    private LinkedListNode? MergeRecursion(LinkedListNode? one, LinkedListNode? two)
     {
-        if (one == null)
-        {
-            return two;
-        }
-
-        if (two == null)
-        {
-            return one;
-        }
-			
-        if(one.Data < two.Data)
+        if (one == null) return two;
+        if (two == null) return one;
+        
+        if (one.Data < two.Data)
         {
             one.NextNode = MergeRecursion(one.NextNode, two);
 
             return one;
         }
-        else
-        {
-            two.NextNode = MergeRecursion(two.NextNode, one);
 
-            return two;
-        }
+        two.NextNode = MergeRecursion(two.NextNode, one);
+
+        return two;
     }
 }

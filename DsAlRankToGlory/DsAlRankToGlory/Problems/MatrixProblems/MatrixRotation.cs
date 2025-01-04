@@ -4,27 +4,21 @@ public class MatrixRotation
 {
     public void Rotate(int[][] matrix)
     {
-        if (matrix == null)
-        {
-            throw new ArgumentNullException("matrix", "IsNull");
-        }
-        if(matrix.Length != matrix[0].Length)
-        {
-            throw new ArgumentException("matrix.Length", "Matrix should be NxN");
-        }
+        if (matrix == null) throw new ArgumentNullException(nameof(matrix), "IsNull");
+        if (matrix.Length != matrix[0].Length)
+            throw new ArgumentException("Matrix should be NxN", nameof(matrix.Length));
 
-        int n = matrix.Length;
+        var n = matrix.Length;
 
-        for (int layer = 0; layer < n / 2; layer++)
+        for (var layer = 0; layer < n / 2; layer++)
         {
-            int first = layer;
-            int last = n - 1 - layer;
+            var first = layer;
+            var last = n - 1 - layer;
 
-            for (int i = first; i < last; i++)
+            for (var i = first; i < last; i++)
             {
-                int offset = i - first;
-
-                int top = matrix[first][i];
+                var offset = i - first;
+                var top = matrix[first][i];
 
                 matrix[first][i] = matrix[last - offset][first];
 

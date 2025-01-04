@@ -44,7 +44,7 @@ public class InsertSort
                 PrintResult(ar);
 
                 if (i != 0) continue;
-                
+
                 ar[i] = valueToInsert;
                 PrintResult(ar);
             }

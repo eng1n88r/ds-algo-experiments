@@ -80,7 +80,7 @@ public class AnagramCount
 
                 position += 1;
             }
-            
+
             Console.Write(outputPositions.Count);
         }
     }

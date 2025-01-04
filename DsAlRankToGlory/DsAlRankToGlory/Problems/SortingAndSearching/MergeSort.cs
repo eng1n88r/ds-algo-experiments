@@ -4,35 +4,33 @@ public class MergeSort
 {
     public void SortArray(int[] array)
     {
-        int[] copy = new int[array.Length];
+        var copy = new int[array.Length];
 
         Sort(array, copy, 0, array.Length - 1);
     }
 
     private void Sort(int[] array, int[] helper, int low, int high)
     {
-        if(low < high)
-        {
-            int mid = (low + high) / 2;
+        if (low >= high) return;
+        
+        var mid = (low + high) / 2;
 
-            Sort(array, helper, low, mid);
-            Sort(array, helper, mid + 1, high);
-
-            Merge(array, helper, low, mid, high);
-        }
+        Sort(array, helper, low, mid);
+        Sort(array, helper, mid + 1, high);
+        Merge(array, helper, low, mid, high);
     }
 
     private void Merge(int[] array, int[] helper, int low, int mid, int high)
     {
-        for (int i = low; i <= high; i++)
+        for (var i = low; i <= high; i++)
         {
             helper[i] = array[i];
         }
 
-        int helperLeft = low;
-        int helperRight = mid + 1;
+        var helperLeft = low;
+        var helperRight = mid + 1;
 
-        int current = low;
+        var current = low;
 
         while (helperLeft <= mid && helperRight <= high)
         {
@@ -50,9 +48,9 @@ public class MergeSort
             current++;
         }
 
-        int remaining = mid - helperLeft;
+        var remaining = mid - helperLeft;
 
-        for (int i = 0; i <= remaining; i++)
+        for (var i = 0; i <= remaining; i++)
         {
             array[current + i] = helper[helperLeft + i];
         }
