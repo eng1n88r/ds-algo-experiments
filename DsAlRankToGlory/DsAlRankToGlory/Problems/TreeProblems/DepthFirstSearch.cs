@@ -4,7 +4,7 @@ namespace DsAlRankToGlory.Problems.TreeProblems;
 
 public class DepthFirstSearch
 {
-    public void Search(TreeNode root, int level, IDictionary<int, IList<TreeNode>> levelMap)
+    public void Search(TreeNode? root, int level, IDictionary<int, IList<TreeNode>> levelMap)
     {
         if (root == null)
         {
@@ -20,7 +20,7 @@ public class DepthFirstSearch
         }
         else
         {
-            List<TreeNode> nodes = new List<TreeNode>();
+            var nodes = new List<TreeNode>();
 
             if (root.Position == Position.Left)
             {

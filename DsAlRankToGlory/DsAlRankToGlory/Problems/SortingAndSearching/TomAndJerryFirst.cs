@@ -2,7 +2,7 @@ namespace DsAlRankToGlory.Problems.SortingAndSearching;
 
 public class TomAndJerryFirst
 {
-    static void Run()
+    public static void Run()
     {
         var fieldDimension = Console.ReadLine();
 
@@ -16,13 +16,13 @@ public class TomAndJerryFirst
 
         var fieldMatrix = new bool[xLimit, yLimit];
 
-        for (int i = 0; i < yLimit; i++)
+        for (var i = 0; i < yLimit; i++)
         {
-            var line = Console.ReadLine();
+            var line = Console.ReadLine() ?? throw new ArgumentNullException();
 
             var lineArray = line.Split(' ');
 
-            int x = 0;
+            var x = 0;
 
             foreach (var item in lineArray)
             {
@@ -38,7 +38,7 @@ public class TomAndJerryFirst
 
         while (fieldMatrix[tomXPosition, tomYPosition] == false)
         {
-            int moveCounter = 0;
+            var moveCounter = 0;
 
             while (true)
             {
@@ -64,22 +64,21 @@ public class TomAndJerryFirst
 
                 moveCounter += 1;
 
-                if (tomXPosition == jerryXPosition && tomYPosition == jerryYPosition)
-                {
-                    Console.WriteLine(moveCounter);
+                if (tomXPosition != jerryXPosition || tomYPosition != jerryYPosition) continue;
+                
+                Console.WriteLine(moveCounter);
 
-                    return;
-                }
+                return;
             }
         }
 
         Console.WriteLine(-1);
     }
 
-    static Tuple<int, int>? MoveForwardCoordinates(bool[,] matrix, int x, int y, int previousX, int previousY)
+    public static Tuple<int, int>? MoveForwardCoordinates(bool[,] matrix, int x, int y, int previousX, int previousY)
     {
-        int xMax = matrix.GetUpperBound(0);
-        int yMax = matrix.GetUpperBound(1);
+        var xMax = matrix.GetUpperBound(0);
+        var yMax = matrix.GetUpperBound(1);
 
         if (x < xMax && x + 1 != previousX && matrix[x + 1, y] == false)
         {

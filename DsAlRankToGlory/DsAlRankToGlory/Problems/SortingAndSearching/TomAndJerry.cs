@@ -4,13 +4,13 @@ public class TomAndJerry
 {
     private const string WallTexture = "██";
 
-    /*static void Main(string[] args)
+    public static void Run(string[] args)
     {
         // 1 = Wall
         // 2 = Tom
         // 3 = Jerry
         var mazeData =
-            new string[]
+            new[]
             {
                 "0 0 0 0 0 0 0 0 0",
                 "0 1 0 1 1 1 1 1 0",
@@ -23,19 +23,19 @@ public class TomAndJerry
                 "1 0 0 0 1 1 0 0 0",
             };
 
-        var mazeWidth = mazeData[0].Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Length;
-        var mazeHeght = mazeData.GetUpperBound(0) + 1;
+        var mazeWidth = mazeData[0].Split([' '], StringSplitOptions.RemoveEmptyEntries).Length;
+        var mazeHeight = mazeData.GetUpperBound(0) + 1;
 
-        MazeCell tomCell = null;
-        MazeCell jerryCell = null;
+        MazeCell? tomCell = null;
+        MazeCell? jerryCell = null;
 
-        var maze = new MazeCell[mazeHeght, mazeWidth];
+        var maze = new MazeCell[mazeHeight, mazeWidth];
 
-        for (int i = 0; i < mazeHeght; i++)
+        for (var i = 0; i < mazeHeight; i++)
         {
             var cellTypes = mazeData[i].Split(' ').Select(x => (MazeCellTypes)Convert.ToInt32(x)).ToArray();
 
-            for (int j = 0; j < mazeWidth; j++)
+            for (var j = 0; j < mazeWidth; j++)
             {
                 var currentCell = new MazeCell()
                 {
@@ -46,22 +46,23 @@ public class TomAndJerry
 
                 maze[i, j] = currentCell;
 
-                if (currentCell.Type == MazeCellTypes.Tom)
+                switch (currentCell.Type)
                 {
-                    tomCell = currentCell;
-                }
-                else if (currentCell.Type == MazeCellTypes.Jerry)
-                {
-                    jerryCell = currentCell;
+                    case MazeCellTypes.Tom:
+                        tomCell = currentCell;
+                        break;
+                    case MazeCellTypes.Jerry:
+                        jerryCell = currentCell;
+                        break;
                 }
             }
         }
 
-        printMaze(maze);
+        PrintMaze(maze);
 
         var cellQueue = new Queue<MazeCell>();
 
-        cellQueue.Enqueue(tomCell);
+        if (tomCell != null) cellQueue.Enqueue(tomCell);
 
         while (cellQueue.Count > 0)
         {
@@ -76,18 +77,17 @@ public class TomAndJerry
             EnqueueNextCells(cellQueue, currentCell, maze);
 
             //Uncomment to watch step-by-step.
-            printMaze(maze);
+            PrintMaze(maze);
             Console.ReadKey();
         }
 
-        printMaze(maze);
+        PrintMaze(maze);
 
-        Console.WriteLine("Path to Jerry: " + (jerryCell.Distance > 0 ? jerryCell.Distance : -1));
+        Console.WriteLine("Path to Jerry: " + (jerryCell?.Distance > 0 ? jerryCell.Distance : -1));
         Console.WriteLine();
     }
-    */
 
-    static void EnqueueNextCells(Queue<MazeCell> cellQueue, MazeCell currentCell, MazeCell[,] maze)
+    public static void EnqueueNextCells(Queue<MazeCell> cellQueue, MazeCell currentCell, MazeCell[,] maze)
     {
         var mazeWidth = maze.GetUpperBound(1) + 1;
         var mazeHeght = maze.GetUpperBound(0) + 1;
@@ -121,28 +121,25 @@ public class TomAndJerry
         }
     }
 
-    static void EnqueueNextCell(Queue<MazeCell> cellQueue, MazeCell currentCell, MazeCell nextCell)
+    public static void EnqueueNextCell(Queue<MazeCell> cellQueue, MazeCell currentCell, MazeCell nextCell)
     {
-        if (nextCell.Distance == 0 &&
-            (nextCell.Type == MazeCellTypes.Road ||
-             nextCell.Type == MazeCellTypes.Jerry))
-        {
-            nextCell.Distance = currentCell.Distance + 1;
-            cellQueue.Enqueue(nextCell);
-        }
+        if (nextCell is not { Distance: 0, Type: MazeCellTypes.Road or MazeCellTypes.Jerry }) return;
+        
+        nextCell.Distance = currentCell.Distance + 1;
+        cellQueue.Enqueue(nextCell);
     }
 
-    static void PrintMaze(MazeCell[,] maze)
+    public static void PrintMaze(MazeCell[,] maze)
     {
         var mazeWidth = maze.GetUpperBound(1) + 1;
-        var mazeHeght = maze.GetUpperBound(0) + 1;
+        var mazeHeight = maze.GetUpperBound(0) + 1;
 
         var wallCell = new MazeCell()
         {
             Type = MazeCellTypes.Wall
         };
 
-        for (int i = 0; i < mazeWidth + 2; i++)
+        for (var i = 0; i < mazeWidth + 2; i++)
         {
             if (i > 0)
             {
@@ -154,11 +151,11 @@ public class TomAndJerry
 
         Console.WriteLine();
 
-        for (int i = 0; i < mazeHeght; i++)
+        for (var i = 0; i < mazeHeight; i++)
         {
             Console.Write(GetCellTexture(wallCell));
 
-            for (int j = 0; j < mazeWidth; j++)
+            for (var j = 0; j < mazeWidth; j++)
             {
                 var cell = maze[i, j];
 
@@ -180,7 +177,7 @@ public class TomAndJerry
             Console.WriteLine();
         }
 
-        for (int i = 0; i < mazeWidth + 2; i++)
+        for (var i = 0; i < mazeWidth + 2; i++)
         {
             if (i > 0)
             {
@@ -194,22 +191,17 @@ public class TomAndJerry
         Console.WriteLine();
     }
 
-    static string GetCellTexture(MazeCell cell)
-    {
-        switch (cell.Type)
+    static string GetCellTexture(MazeCell cell) =>
+        cell.Type switch
         {
-            case MazeCellTypes.Jerry:
-                return "JJ";
-            case MazeCellTypes.Wall:
-                return WallTexture;
-            case MazeCellTypes.Tom:
-                return "TT";
-            default:
-                return cell.Distance > 0 ? cell.Distance.ToString("00") : "  ";
-        }
-    }
+            MazeCellTypes.Jerry => "JJ",
+            MazeCellTypes.Wall => WallTexture,
+            MazeCellTypes.Tom => "TT",
+            _ => cell.Distance > 0 ? cell.Distance.ToString("00") : "  "
+        };
 
-    class MazeCell
+
+    public class MazeCell
     {
         public MazeCellTypes Type { get; set; }
 
@@ -222,7 +214,7 @@ public class TomAndJerry
         public int Y { get; set; }
     }
 
-    enum MazeCellTypes
+    public enum MazeCellTypes
     {
         Road,
         Wall,
